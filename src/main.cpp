@@ -2,6 +2,7 @@
 #include "huffman.h"
 
 /**
+ * Hola
  * Módulo que lee un fichero de texto, y calcula la frecuencia de aparición de 
  * cada símbolo.
  * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
