@@ -2,11 +2,12 @@ CXX=g++
 CXXFLAGS= -Wall -pedantic
 SOURCES=src
 LIBS=lib
+LDLIBS=-lm
 
 all: main
 
-main: huffman.o node.o qsort.o 	
-	$(CXX) $(SOURCES)/main.cpp $(LIBS)/huffman.o $(LIBS)/node.o $(LIBS)/qsort.o -o $@ $(CXXFLAGS)
+main: huffman.o node.o qsort.o utils.o
+	$(CXX) $(SOURCES)/main.cpp $(LIBS)/huffman.o $(LIBS)/node.o $(LIBS)/qsort.o $(LIBS)/utils.o -o $@ $(CXXFLAGS) $(LDLIBS)
 
 node.o:
 	$(CXX) $(SOURCES)/node.cpp -c -o $(LIBS)/$@ $(CXXFLAGS)
@@ -16,6 +17,9 @@ qsort.o:
 
 huffman.o:
 	$(CXX) $(SOURCES)/huffman.cpp -c -o $(LIBS)/$@ $(CXXFLAGS)
+
+utils.o:
+	$(CXX) $(SOURCES)/utils.cpp -c -o $(LIBS)/$@ $(CXXFLAGS)
 
 debug: clean
 	$(CXX) $(SOURCES)/main.cpp $(SOURCES)/huffman.cpp $(SOURCES)/qsort.cpp $(SOURCES)/node.cpp -o $@ $(CXXFLAGS) -g
