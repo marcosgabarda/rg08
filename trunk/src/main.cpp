@@ -1,5 +1,3 @@
-#include "types.h"
-#include "huffman.h"
 #include "utils.h"
 
 /**
@@ -12,17 +10,17 @@
 
 int main(int argc, char* argv[]) {
   string sFile(argv[1]);
-  FMN frec;
-  frec = leerFuente(sFile);
   
-  Huffman huf(frec);
-  huf.creaHuffman();
-  COD Codigo = huf.generaCodigo();
-
-  cout << "Simbolo\t  \tCodigo" << endl;
-  for (COD::iterator it = Codigo.begin(); it != Codigo.end(); it++) {
-    cout << it->first << "\t=>\t" << it->second << endl;
+  if (argc == 1) {
+    cerr << "Uso: " << argv[0] << " origen [destino]" << endl;
   }
 
+  if (argc == 2) {
+    comprimeFichero(sFile);
+  } else if (argc == 3) {
+    string sFileOut(argv[2]);
+    comprimeFichero(sFile, sFileOut);
+  }
+  
   return 0;
 }

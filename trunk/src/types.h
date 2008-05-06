@@ -13,6 +13,11 @@ using namespace std;
 
 typedef map<char, double> FMN;
 typedef vector<pair<char, double> > FMNO;
-typedef map<string, string> COD;
+
+/**
+ * Mapa para la codificación: 
+ * simbolo(char) -> codigo(binario)
+ */
+typedef map<char, string> COD;
 
 #endif

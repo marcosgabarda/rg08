@@ -72,3 +72,7 @@ COD Huffman::generaCodigo() {
   return Arbol.DTA();
 
 }
+
+Node* Huffman::getTree() {
+  return m_vFuente[0];
+}

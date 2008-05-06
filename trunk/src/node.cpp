@@ -101,8 +101,8 @@ void Node::_DTA(stack<char> S, Node *root) {
       S.pop();
       m_CodigoHoja.push_back(c);
     }
-    string cadena;
-    cadena.push_back(m_Data);
-    root->m_CodigoFinal[cadena] = m_CodigoHoja;
+    //string cadena;
+    //cadena.push_back(m_Data);
+    root->m_CodigoFinal[m_Data] = m_CodigoHoja;
   }
 }

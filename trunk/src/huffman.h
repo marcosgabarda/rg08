@@ -11,6 +11,7 @@ class Huffman {
   Huffman (FMN origen);
   void creaHuffman ();
   COD generaCodigo();
+  Node *getTree();
 };
 
 #endif
