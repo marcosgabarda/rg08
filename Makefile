@@ -4,10 +4,13 @@ SOURCES=src
 LIBS=lib
 LDLIBS=-lm
 
-all: main
+all: huf unhuf
 
-main: huffman.o node.o qsort.o utils.o
-	$(CXX) $(SOURCES)/main.cpp $(LIBS)/huffman.o $(LIBS)/node.o $(LIBS)/qsort.o $(LIBS)/utils.o -o $@ $(CXXFLAGS) $(LDLIBS)
+huf: huffman.o node.o qsort.o utils.o
+	$(CXX) $(SOURCES)/huf.cpp $(LIBS)/huffman.o $(LIBS)/node.o $(LIBS)/qsort.o $(LIBS)/utils.o -o $@ $(CXXFLAGS) $(LDLIBS)
+
+unhuf: huffman.o node.o qsort.o utils.o
+	$(CXX) $(SOURCES)/unhuf.cpp $(LIBS)/huffman.o $(LIBS)/node.o $(LIBS)/qsort.o $(LIBS)/utils.o -o $@ $(CXXFLAGS) $(LDLIBS)
 
 node.o:
 	$(CXX) $(SOURCES)/node.cpp -c -o $(LIBS)/$@ $(CXXFLAGS)
