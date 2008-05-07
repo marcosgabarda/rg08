@@ -12,10 +12,12 @@
  */
 FMN leerFuente(string sFile) {
   FMN caracterFrecuencia;
-  ifstream file(sFile.c_str());
+  ifstream file(sFile.c_str(), ofstream::binary);
   char cCaracter;
+  char buffer[1];
 
-  while (file.get(cCaracter)) {
+  while (!file.read(buffer, 1).eof()) {
+    cCaracter = buffer[0];
     if (caracterFrecuencia.find(cCaracter) != caracterFrecuencia.end()) {
       caracterFrecuencia[cCaracter]++;
     } else {

@@ -28,4 +28,4 @@ debug: clean
 	$(CXX) $(SOURCES)/main.cpp $(SOURCES)/huffman.cpp $(SOURCES)/qsort.cpp $(SOURCES)/node.cpp -o $@ $(CXXFLAGS) -g
 
 clean:
-	$(RM) -f *~ $(SOURCES)/*~  $(LIBS)/*.o main debug
+	$(RM) -f *~ $(SOURCES)/*~  $(LIBS)/*.o huf unhuf debug
