@@ -6,9 +6,13 @@
 
 FMN leerFuente(string sFile);
 char creaOcteto (string sCodigo, int &nCeros);
-string recuperaOcteto(char cCodigo, int nCeros);
 void comprimeFichero(string sFile, string sFileOut = "");
-void descomprimeFichero(string sFile);
 void serializaArbol(string &sSecuencia, Node *Arbol);
+void deserializaArbol(string &sSecuencia, Node *Arbol);
+string leerComprimido(string sFile, int &nLenArbol);
+char decodifica(string &sSecuencia, Node *Arbol);
+void descomprimeFichero(string sFile, string sFileOut = "");
+unsigned char bin2char(string sSecuencia);
+string char2bin(unsigned char cData);
 
 #endif

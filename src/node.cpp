@@ -10,7 +10,7 @@ Node::Node () {
 
 Node::Node (char cData, double dProb) {
   m_dProb = dProb;
-  m_Data = cData;  
+  m_cData = cData;  
   m_bIsLeaf = true;
   m_pLeftSon = 0;
   m_pRightSon = 0;
@@ -49,7 +49,7 @@ bool Node::getIsLeaf(){
 }
 
 char Node::getData(){
-  return m_Data;
+  return m_cData;
 }
 
 Node* Node::merge (Node *A) {
@@ -95,14 +95,18 @@ void Node::_DTA(stack<char> S, Node *root) {
       S.pop();
     }
   } else {    
-    //cout << "Llegamos a la hoja: " << m_Data << endl;
+    //cout << "Llegamos a la hoja: " << m_cData << endl;
     while (!S.empty()) {
       char c = S.top();
       S.pop();
       m_CodigoHoja.push_back(c);
     }
     //string cadena;
-    //cadena.push_back(m_Data);
-    root->m_CodigoFinal[m_Data] = m_CodigoHoja;
+    //cadena.push_back(m_cData);
+    root->m_CodigoFinal[m_cData] = m_CodigoHoja;
   }
+}
+
+void Node::setData (char cData) {
+  m_cData = cData;
 }
