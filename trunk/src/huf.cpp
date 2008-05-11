@@ -9,15 +9,22 @@
  */
 
 int main(int argc, char* argv[]) {
-  string sFile(argv[1]);
+
+  string foo("11100011");
+  cout << foo << endl;
+  cout << bin2char(foo) << endl;
+  cout << char2bin(bin2char(foo)) << endl;
+  
   
   if (argc == 1) {
     cerr << "Uso: " << argv[0] << " origen [destino]" << endl;
   }
 
   if (argc == 2) {
+    string sFile(argv[1]);
     comprimeFichero(sFile);
   } else if (argc == 3) {
+    string sFile(argv[1]);
     string sFileOut(argv[2]);
     comprimeFichero(sFile, sFileOut);
   }

@@ -3,7 +3,7 @@
 
 class Node {
  private:
-  char m_Data;
+  char m_cData;
   bool m_bIsLeaf;
   double m_dProb;
   Node *m_pLeftSon; // Hijo 0
@@ -22,6 +22,7 @@ class Node {
   void setLeftSon (Node *pA);
   void setRightSon (Node *pA);
   void setIsLeaf(bool bIsLeaf);
+  void setData (char cData);
 
   double getProb();
   Node *getLeftSon();
