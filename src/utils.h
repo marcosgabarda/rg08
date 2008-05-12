@@ -5,7 +5,7 @@
 #include "node.h"
 
 FMN leerFuente(string sFile);
-char creaOcteto (string sCodigo, int &nCeros);
+unsigned char creaOcteto (string sCodigo, int &nCeros);
 void comprimeFichero(string sFile, string sFileOut = "");
 void serializaArbol(string &sSecuencia, Node *Arbol);
 void deserializaArbol(string &sSecuencia, Node *Arbol);

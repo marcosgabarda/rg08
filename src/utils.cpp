@@ -3,6 +3,14 @@
 #include "types.h"
 #include <cmath>
 
+/**
+ * Convierte de un binario, repersentado por una cadena de caracteres 0 y 1, a un 
+ * unsigned char, con la codificacion correspondiente en binario real. La secuencia
+ * tiene que ser exactamente de 8 caracteres.
+ * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
+ * \param sSecuencia string
+ * \return unsigned char
+ */
 unsigned char bin2char(string sSecuencia) {
 
   if (sSecuencia.size() != 8) return '\0';
@@ -24,8 +32,15 @@ unsigned char bin2char(string sSecuencia) {
   return cOcteto;
 }
 
+/**
+ * Convierte de un unsigned char a un binario, representado por una 
+ * cadena de 0's y 1's, con la codificacion correspondiente en binario real.
+ * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
+ * \param cData unsigned char
+ * \return string
+ */
 string char2bin(unsigned char cData) {
-  string sBuffer("");
+  string sBuffer;
   for (unsigned char i = cData; i > 1; i/=2) {
     unsigned char nResto = i%2;
     if (nResto == 0) {
@@ -35,10 +50,10 @@ string char2bin(unsigned char cData) {
     }
   }
   sBuffer.push_back('1');
-  string sBufferFinal("");
+  string sBufferFinal;
   int nLongitud = static_cast<int>(sBuffer.size());
   for (int i = 0; i < (8 - nLongitud); i++ ) sBufferFinal.push_back('0');
-  for(int i = nLongitud; i >= 0; i-- ) sBufferFinal.push_back(sBuffer[i]);
+  for(int i = nLongitud - 1; i >= 0; i-- ) sBufferFinal.push_back(sBuffer[i]);
   return sBufferFinal;
 }
 
@@ -74,7 +89,16 @@ FMN leerFuente(string sFile) {
   return caracterFrecuencia;
 }
 
-char creaOcteto (string sCodigo, int &nCeros) {
+
+/**
+ * Funcion que crea un unsigned char, a partir de una secuencia de 0's y 1's en
+ * una cadena. Ademas establece en un parametro de salida el numero de ceros de
+ * relleno para llegar a 8 bits.
+ * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
+ * \param sCodigo string, nCeros int (salida)
+ * \return unsigned char
+ */
+unsigned char creaOcteto (string sCodigo, int &nCeros) {
 
   int nLongitud = sCodigo.size();
   nCeros = 0;
@@ -85,21 +109,6 @@ char creaOcteto (string sCodigo, int &nCeros) {
     }
     cout << "Byte de relleno: " << sCodigo << endl;
   }
-
-  /*  int nSum = 0;
-  for (int i = 0; i < nLongitud; i++) {
-    char c = sCodigo[i];
-    int n = 0;
-    if (c == '0') {
-      n = 0;
-    } else if (c == '1'){
-      n = 1;
-    }    
-    nSum += n*pow(2.0, 7 - i);    
-  }
-  char cOcteto;
-  cOcteto = static_cast<char>(nSum);
-  return cOcteto;*/
   return bin2char(sCodigo);
 }
 
@@ -114,22 +123,6 @@ void serializaArbol(string &sSecuencia, Node *Arbol) {
   } else {
     sSecuencia.push_back('1');
     char cData = Arbol->getData();
-    
-    /*string sBuffer("");
-    int iData = static_cast<int>(cData);
-    for (int i = iData; i > 1; i/=2) {
-      int nResto = i%2;
-      if (nResto == 0) {
-	sBuffer.push_back('0');
-      } else {
-	sBuffer.push_back('1');
-      }
-    }
-    sBuffer.push_back('1');
-    string sBufferCodigo("");
-    for (int i = sBuffer.size() - 1; i >= 0; i--) {
-      sBufferCodigo.push_back(sBuffer[i]);
-      }*/
     string sBuffer = char2bin(cData);
     sSecuencia.append(sBuffer);
    
@@ -140,23 +133,10 @@ void serializaArbol(string &sSecuencia, Node *Arbol) {
 void deserializaArbol(string &sSecuencia, Node *Arbol) {
   char cBit = sSecuencia[0];
   if (cBit == '1' ) {    
-    /*int nSum = 0;
-    for (int i = 1; i <= 8; i++) {
-      char c = sSecuencia[i];
-      int n = 0;
-      if (c == '0') {
-	n = 0;
-      } else if (c == '1'){
-	n = 1;
-      }    
-      nSum += n*pow(2.0, 7 - i);
-    }
-    char cOcteto;
-    cOcteto = static_cast<char>(nSum);    */
-    char cOcteto = bin2char(sSecuencia.substr( 1, 7));
+    char cOcteto = bin2char(sSecuencia.substr( 1, 8));
     Arbol->setIsLeaf(true);
     Arbol->setData(cOcteto);
-    sSecuencia.erase(0, 7);
+    sSecuencia.erase(0, 9);
   } else {
     sSecuencia.erase(0,1);
     Node *nuevoIzquierdo = new Node();
@@ -195,7 +175,7 @@ void comprimeFichero(string sFile, string sFileOut) {
   string bufferCodigo("");
   serializaArbol(bufferCodigo, huf.getTree());
 
-  int nBitsArbol = bufferCodigo.size(); 
+  int nBitsArbol = static_cast<int>(bufferCodigo.size()); 
   fSalida << nBitsArbol;
 
   cout << "Tamaño del arbol(bits): " << nBitsArbol << endl;
@@ -227,11 +207,8 @@ void comprimeFichero(string sFile, string sFileOut) {
     char buffer[1];
     buffer[0] = cCodChar;
     fSalida.write(buffer, 1);
-    /*char cCeros = static_cast<char>(nCeros);
-    buffer[0] = cCeros;
-    cout << "Numero de ceros extras: " << nCeros << endl;
-    fSalida.write(buffer, 1);*/
-    fSalida << nCeros;
+    unsigned char cCeros = static_cast<unsigned char>(nCeros);
+    fSalida << cCeros;
   }
   
   fSalida.close();
@@ -250,17 +227,6 @@ string leerComprimido(string sFile, int &nLenArbol) {
 
   while (!file.read(buffer, 1).eof()) {
      cData = buffer[0];
-     /*string sBuffer("");
-     //     unsigned int iData = static_cast<unsigned int>(cData);
-     for (char i = cData; i > 1; i/=2) {
-       char nResto = i%2;
-       if (nResto == 0) {
-	 sBuffer.push_back('0');
-       } else {
-	 sBuffer.push_back('1');
-       }
-     }
-     sBuffer.push_back('1');*/
      string sBuffer = char2bin(cData);
      sSecuencia.append(sBuffer);
   }
@@ -273,11 +239,12 @@ char decodifica(string &sSecuencia, Node *Arbol) {
   if (Arbol->getIsLeaf()) {
     return Arbol->getData();
   } else {
-    string subSecuencia = sSecuencia.substr(1, sSecuencia.size() - 1);
-    if (sSecuencia[0] == '1') {
-      return decodifica(subSecuencia, Arbol->getRightSon());
-    } else if (sSecuencia[0] == '0') {
-      return decodifica(subSecuencia, Arbol->getLeftSon());
+    char cBit = sSecuencia[0];
+    sSecuencia.erase(0,1);
+    if (cBit == '1') {
+      return decodifica(sSecuencia, Arbol->getRightSon());
+    } else if (cBit == '0') {
+      return decodifica(sSecuencia, Arbol->getLeftSon());
     }
   }
   return '\0';
@@ -304,33 +271,30 @@ void descomprimeFichero(string sFile, string sFileOut) {
   cout << " OK" << endl;
 
   string bufferDatosTerm = bufferComprimido.substr(nLenArbol, bufferComprimido.size() - nLenArbol);
-  string bufferDatos = bufferDatosTerm.substr(0, bufferDatosTerm.size() - sizeof(int)*8);
-  string bufferTerm = bufferDatosTerm.substr(bufferDatosTerm.size() - sizeof(int)*8, sizeof(int)*8);
+  string bufferDatos = bufferDatosTerm.substr(0, bufferDatosTerm.size() - 8);
+  string bufferTerm = bufferDatosTerm.substr(bufferDatosTerm.size() - 8, 8);
 
 
-  int nSum = 0;
   int nLongitud = static_cast<int>(bufferTerm.size());
   cout << "Terminador (secuencia de bits): " << bufferTerm << endl;
   cout << "Tamaño del terminador (nº de bits): " << nLongitud << endl;
-  for (int i = 0; i < nLongitud; i++) {
-    char c = bufferTerm[i];
-    int n = 0;
-    if (c == '0') {
-      n = 0;
-    } else if (c == '1'){
-      n = 1;
-    }    
-    nSum += n*pow(2.0, (nLongitud - 1) - i);    
-  }
-  cout << "Numero de ceros de relleno: " << nSum << endl;
+
+  unsigned int nCeros = static_cast<unsigned int>(bin2char(bufferTerm));
+
+  cout << "Numero de ceros de relleno: " << nCeros << endl;
   
 
   ofstream fSalida(sFileOut.c_str(), ofstream::binary);
 
-  bufferDatos = bufferDatos.substr(0, bufferDatos.size() - nSum - 1);
-  while (bufferDatos.size() != 0) {
+  cout << bufferDatos << endl;
+  bufferDatos = bufferDatos.substr(0, bufferDatos.size() - nCeros);
+  cout << bufferDatos << endl;
+
+  while (bufferDatos.size() > 1) {
     char cData = decodifica(bufferDatos, Arbol);
-    fSalida << cData;
+    char buffer[1];
+    buffer[0] = cData;
+    fSalida.write(buffer, 1);
   }
 
   fSalida.close();
