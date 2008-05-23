@@ -10,7 +10,7 @@ void comprimeFichero(string sFile, string sFileOut = "");
 void serializaArbol(string &sSecuencia, Node *Arbol);
 void deserializaArbol(string &sSecuencia, Node *Arbol);
 string leerComprimido(string sFile, int &nLenArbol);
-char decodifica(string &sSecuencia, Node *Arbol);
+unsigned char decodifica(string &sSecuencia, Node *Arbol);
 void descomprimeFichero(string sFile, string sFileOut = "");
 unsigned char bin2char(string sSecuencia);
 string char2bin(unsigned char cData);
