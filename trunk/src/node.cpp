@@ -8,7 +8,7 @@ Node::Node () {
   m_pRightSon = 0;
 }
 
-Node::Node (char cData, double dProb) {
+Node::Node (unsigned char cData, double dProb) {
   m_dProb = dProb;
   m_cData = cData;  
   m_bIsLeaf = true;
@@ -48,7 +48,7 @@ bool Node::getIsLeaf(){
   return m_bIsLeaf;
 }
 
-char Node::getData(){
+unsigned char Node::getData(){
   return m_cData;
 }
 
@@ -80,7 +80,7 @@ COD Node::DTA(){
   return m_CodigoFinal;
 }
 
-void Node::_DTA(stack<char> S, Node *root) {
+void Node::_DTA(stack<unsigned char> S, Node *root) {
   if (!m_bIsLeaf) {
     if (m_pLeftSon) {
       //cout << "Bajamos por la rama izquierda." << endl;
@@ -97,7 +97,7 @@ void Node::_DTA(stack<char> S, Node *root) {
   } else {    
     //cout << "Llegamos a la hoja: " << m_cData << endl;
     while (!S.empty()) {
-      char c = S.top();
+      unsigned char c = S.top();
       S.pop();
       m_CodigoHoja.push_back(c);
     }
@@ -107,6 +107,6 @@ void Node::_DTA(stack<char> S, Node *root) {
   }
 }
 
-void Node::setData (char cData) {
+void Node::setData (unsigned char cData) {
   m_cData = cData;
 }
