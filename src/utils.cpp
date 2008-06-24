@@ -4,11 +4,13 @@
 #include <cmath>
 
 /**
- * Convierte de un binario, repersentado por una cadena de caracteres 0 y 1, a un 
- * unsigned char, con la codificacion correspondiente en binario real. La secuencia
- * tiene que ser exactamente de 8 caracteres.
- * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
- * \param sSecuencia string
+ * Convierte de un binario, representado por una cadena de caracteres 0 y 1,
+ * a un unsigned char, con la codificaci&oacute;n correspondiente en binario
+ * real. La secuencia tiene que ser exactamente de 8 caracteres.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] sSecuencia Secuencia binaria a convertir.
  * \return unsigned char
  */
 unsigned char bin2char(string sSecuencia) {
@@ -34,9 +36,12 @@ unsigned char bin2char(string sSecuencia) {
 
 /**
  * Convierte de un unsigned char a un binario, representado por una 
- * cadena de 0's y 1's, con la codificacion correspondiente en binario real.
- * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
- * \param cData unsigned char
+ * cadena de 0s y 1s, con la codificaci&oacute;n correspondiente en binario
+ * real.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] cData Caracter a convertir a secuencia binaria.
  * \return string
  */
 string char2bin(unsigned char cData) {
@@ -58,11 +63,13 @@ string char2bin(unsigned char cData) {
 }
 
 /**
- * Módulo que lee un fichero de texto, y calcula la frecuencia de aparición de 
- * cada símbolo.
- * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
- * \param sFile Dirección absoluta o relativa de la fuente.
- * \return Mapa de caracteres y frecuencia de aparición.
+ * M&oacute;dulo que lee un fichero de texto, y calcula la frecuencia de
+ * aparici&oacute;n de cada s&iacute;mbolo.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] sFile Direcci&oacute;n absoluta o relativa de la fuente.
+ * \return Mapa de caracteres y frecuencia de aparici&oacute;n.
  */
 FMN leerFuente(string sFile) {
   FMN caracterFrecuencia;
@@ -91,11 +98,14 @@ FMN leerFuente(string sFile) {
 
 
 /**
- * Funcion que crea un unsigned char, a partir de una secuencia de 0's y 1's en
- * una cadena. Ademas establece en un parametro de salida el numero de ceros de
- * relleno para llegar a 8 bits.
- * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
- * \param sCodigo string, nCeros int (salida)
+ * Funci&oacute;n que crea un unsigned char, a partir de una secuencia de
+ * 0s y 1s en una cadena. Adem&aacute;s establece en un par&aacute;metro de
+ * salida el numero de ceros de relleno para llegar a 8 bits.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] sCodigo Secuencia de la que obtener el octeto.
+ * \param[out] nCeros N&uacute;mero de ceros extras.
  * \return unsigned char
  */
 unsigned char creaOcteto (string sCodigo, int &nCeros) {
@@ -112,6 +122,14 @@ unsigned char creaOcteto (string sCodigo, int &nCeros) {
   return bin2char(sCodigo);
 }
 
+/**
+ * Funci&oacute;n que serializa un &aacute;rbol.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] Arbol Puntero al &aacute;rbol a serializar.
+ * \param[out] sSecuencia &Aacute;rbol serializado.
+ */
 void serializaArbol(string &sSecuencia, Node *Arbol) {
 
   if (!Arbol->getIsLeaf()) {
@@ -129,7 +147,14 @@ void serializaArbol(string &sSecuencia, Node *Arbol) {
   }
 }
 
-
+/**
+ * Funci&oacute;n que deserializa un &aacute;rbol.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] Arbol Puntero al &aacute;rbol deserializado.
+ * \param[out] sSecuencia &Aacute;rbol serializado.
+ */
 void deserializaArbol(string &sSecuencia, Node *Arbol) {
   unsigned char cBit = sSecuencia[0];
   if (cBit == '1' ) {    
@@ -152,18 +177,33 @@ void deserializaArbol(string &sSecuencia, Node *Arbol) {
 
 
 /**
- * Función que escribe en la ruta especificada, el código
+ * Funci&oacute;n que escribe en la ruta especificada, el c&oacute;digo 
+ * comprimido.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] sFile Nombre del fichero fuente.
+ * \param[in] sFileOut Nombre del fichero destino.
  */
 void comprimeFichero(string sFile, string sFileOut) {
 
   cout << "### COMPRIMIENDO ###" << endl;
 
+  /*
+   * En primer lugar se crea la fuente de memoria nula leyendo el
+   * fichero fuente. Inmediatamente despu&eacute;s se crea el &aacute;rbol
+   * de c&oacute;digo Huffman.
+   */
   FMN frec;
   frec = leerFuente(sFile);  
   Huffman huf(frec);
   huf.creaHuffman();
   COD Codigo = huf.generaCodigo();
 
+  /*
+   * Si no se especifica un nombre de fichero de salida, se a&ntilde;ade la
+   * extensi&oacute;n .huf al final.
+   */
   if (sFileOut == "") {
     sFileOut = sFile;
     sFileOut.append(".huf");
@@ -172,7 +212,9 @@ void comprimeFichero(string sFile, string sFileOut) {
   ifstream fFuente(sFile.c_str());
   ofstream fSalida(sFileOut.c_str(), ofstream::binary);
 
-
+  /*
+   * Obtenemos el &aacute;rbol serializado.
+   */
   string bufferCodigo("");
   serializaArbol(bufferCodigo, huf.getTree());
 
@@ -184,6 +226,10 @@ void comprimeFichero(string sFile, string sFileOut) {
 
   int nCeros;
 
+  /*
+   * Almacenamos el fichero fuente en un buffer y creamos el 
+   * c&oacute;digo Huffman.
+   */
   char cCaracter;
   unsigned char ucCaracter;
   while (fFuente.get(cCaracter)) {
@@ -194,6 +240,10 @@ void comprimeFichero(string sFile, string sFileOut) {
   }
   fFuente.close();
 
+  /*
+   * Creamos el fichero destino convirtiendo el buffer de Huffman octeto a
+   * octeto.
+   */
   string sCodTmp("");    
   for (unsigned int i = 0; i < bufferCodigo.size(); i++) {
     sCodTmp.push_back(bufferCodigo[i]);
@@ -219,6 +269,14 @@ void comprimeFichero(string sFile, string sFileOut) {
 
 }
 
+/**
+ * Funci&oacute;n que lee un fichero comprimido.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] sFile Nombre del fichero fuente.
+ * \param[out] nLenArbol N&uacute;mero de bits del &aacute;rbol;
+ */
 string leerComprimido(string sFile, int &nLenArbol) {
 
   ifstream file(sFile.c_str(), ifstream::binary);
@@ -239,6 +297,16 @@ string leerComprimido(string sFile, int &nLenArbol) {
 
 }
 
+/**
+ * Funci&oacute;n que dada una secuencia de bits y el &aacute;rbol, decodifica
+ * dicha secuencia devolviendo el s&iacute;mbolo asociado.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in,out] sSecuencia Secuencia de bits a decodificar.
+ * \param[in] Arbol Puntero al &aacute;rbol.
+ * \return unsigned char
+ */
 unsigned char decodifica(string &sSecuencia, Node *Arbol) {
   if (Arbol->getIsLeaf()) {
     cout << " " << Arbol->getData();
@@ -256,9 +324,20 @@ unsigned char decodifica(string &sSecuencia, Node *Arbol) {
   return '\0';
 }
 
+/**
+ * Funci&oacute;n que descomprime un fichero comprimido.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] sFile Nombre del fichero comprimido.
+ * \param[in] sFileOut Nombre del fichero de salida.
+ */
 void descomprimeFichero(string sFile, string sFileOut) {
   int nLenArbol;
 
+  /*
+   * En primer lugar leeremos el fichero comprimido.
+   */
   cout << "### DESCOMPRIMIENDO ###" << endl;
 
   cout << "Leyedo comprimido...";
@@ -272,6 +351,10 @@ void descomprimeFichero(string sFile, string sFileOut) {
   string subSecuencia = bufferComprimido.substr(0, nLenArbol);
   cout << "Arbol serializado: " << subSecuencia << endl;
 
+  /*
+   * Tras obtener el c&oacute;digo asociado al &aacute;rbol serializado,
+   * lo deserializamos y obtenemos el buffer de datos.
+   */
   cout << "Deserializando arbol...";
   deserializaArbol(subSecuencia, Arbol);
   cout << " OK" << endl;
@@ -289,13 +372,15 @@ void descomprimeFichero(string sFile, string sFileOut) {
 
   cout << "Numero de ceros de relleno: " << nCeros << endl;
   
-
   ofstream fSalida(sFileOut.c_str(), ofstream::binary);
 
   cout << bufferDatos << endl;
   bufferDatos = bufferDatos.substr(0, bufferDatos.size() - nCeros);
   cout << bufferDatos << endl;
 
+  /*
+   * Una vez le&iacute;dos los datos, decodificamos mediante el &aacute;rbol.
+   */
   while (bufferDatos.size() > 1) {
     cout << "Cod. Huff: ";
     unsigned char cData = decodifica(bufferDatos, Arbol);
