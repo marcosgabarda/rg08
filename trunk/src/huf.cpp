@@ -1,13 +1,5 @@
 #include "utils.h"
 
-/**
- * Un módulo que reciba como datos de entrada una fuente de memoria nula y 
- * proporcione como salida un código de Huffman binario asociado a la misma.
- * \author Iván Rodriguez Sastre & Marcos Gabarda Inat
- * \param sFile Dirección absoluta o relativa de la fuente.
- * \return Mapa de caracteres y frecuencia de aparición.
- */
-
 int main(int argc, char* argv[]) {
 
   if (argc == 1) {

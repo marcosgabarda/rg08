@@ -53,7 +53,7 @@ class Node {
   /**
    * \var m_CodigoTemporal
    * Pila que almacena el c&oacute;digo temporal obtenido al recorrer el
-   * &aacutebol;.
+   * &aacute;bol.
    */
   stack<unsigned char> m_CodigoTemporal;
 
