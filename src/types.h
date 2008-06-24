@@ -11,10 +11,17 @@
 
 using namespace std;
 
+/**
+ * \typedef FMN
+ *
+ * Definici&oacute;n del tipo de datos que modela una fuente de memoria 
+ * nula.
+ */
 typedef map<unsigned char, double> FMN;
-typedef vector<pair<unsigned char, double> > FMNO;
 
 /**
+ * \typedef COD
+ *
  * Mapa para la codificación: 
  * simbolo(char) -> codigo(binario)
  */

@@ -1,6 +1,18 @@
 #include "types.h"
 #include "qsort.h"
 
+
+/**
+ * Funci&oacute;n particion que se usa en el algoritmo de QuickSort. Est&aacute; implementado
+ * para funcionar con vecotres de &aacute;rboles de codificaci&oacute;n Huffman.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in] frecuencias Vector de punteros a Node.
+ * \param[in] izquierda L&iacute;mite izquierdo.
+ * \param[in] derecha L&iacute;mite derecho.
+ * \return Posici&oacute; que marca la partici&oacute;n.
+ */
 int particion( Node **frecuencias, int izquierda, int derecha )
 {
   int posicion = izquierda;
@@ -34,6 +46,16 @@ int particion( Node **frecuencias, int izquierda, int derecha )
   }
 }
 
+/**
+ * Algoritmo de QuicSort.
+ *
+ * \author Iv&aacute;n Rodr&iacute;guez Sastre
+ * \author Marcos Gabarda Inat
+ * \param[in,out] frecuencias Vector de punteros a Node que se ha de ordenar.
+ * \param[in] first Priemera posici&oacute;n del vector que se tiene que ordenar.
+ * \param[in] last &Uacute;ltima posici&oacute;n del vector que se tiene que ordenar.
+ */
+
 void _quicksort( Node **frecuencias, int first, int last )
 {
   int posicionActual;
@@ -44,7 +66,12 @@ void _quicksort( Node **frecuencias, int first, int last )
   _quicksort( frecuencias, posicionActual + 1, last );    
 }
 
-
+/**
+ * Funci&oacute;n que encapsula la llamada al algoritmo de QuickSort.
+ *
+ * \param fuente Vector de punteros a nodos para ordenar.
+ * \return Vector ordenado.
+ */
 vector<Node *> qsort (vector<Node *> fuente) {
 
   
